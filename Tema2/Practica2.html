@@ -126,25 +126,34 @@
 
         alert("¡Correcto! Acceso permitido.");
         //Ejercicio 8
-        function norm(s){
-            return s.toLowerCase().trim().normalize("NFD");
+        function norm(s) {
+            if (!s) return ""; 
+            return s.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
         }
-        var nombreCorrecto = "adolfo";
-        var apellidoCorrecto = "suarez";
-        var respuesta;
+
+        const RESPUESTA_COMPLETA_NORM = norm("adolfo suarez");
+        const NOMBRE_NORM = norm("adolfo");
+        const APELLIDO_NORM = norm("suarez");
 
         while (true) {
-            respuesta = prompt("¿Cuál fue el primer presidente de la democracia española?");
+            let respuesta = prompt("¿Cuál fue el primer presidente de la democracia española? (Escribe 'salir' para terminar)");
             
-            if (norm(respuesta) === norm(nombreCorrecto + apellidoCorrecto)) {
-                alert("¡Correcto!");
+            if (respuesta === null || norm(respuesta) === "salir") {
+                alert("¡Hasta luego!");
                 break;
-            } else if (norm(respuesta) === norm(nombreCorrecto)) {
+            }
+            
+            let respuestaNorm = norm(respuesta);
+            
+            if (respuestaNorm === RESPUESTA_COMPLETA_NORM) {
+                alert("¡Correcto! Adolfo Suárez fue el primer presidente (1976-1981).");
+                break;
+            } else if (respuestaNorm === NOMBRE_NORM) {
                 alert("Te falta el apellido.");
-            } else if (norm(respuesta) === norm(apellidoCorrecto)) {
+            } else if (respuestaNorm === APELLIDO_NORM) {
                 alert("Te falta el nombre.");
             } else {
-                alert("ERROR. Inténtelo de nuevo.");
+                alert("Respuesta incorrecta. Inténtelo de nuevo.");
             }
         }
         //Ejercicio 9
