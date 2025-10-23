@@ -75,6 +75,7 @@
         }else{ 
             alert("Edad no válida. Debe ser un número positivo.");
         }
+ 
         // Ejercicio 5
         // Programa para generar horas desde las 9:00 hasta las 21:30 con intervalos de 30 minutos
         document.write("<h2>Horarios de 9:00 a 21:30 (intervalos de 30 minutos):</h2>");
@@ -112,28 +113,35 @@
         }
         //Ejercicio 7
         // Control parental - primer presidente: Adolfo Suárez
-        var respuestaCorrecta = "Suárez";
+        function norm(s){
+            return s.toLowerCase().trim().normalize("NFD");
+        }
+
+        var respuestaCorrecta = "suarez";
         var respuestaUsuario = prompt("Escribe el apellido del primer presidente de la democracia:");
 
-        while (respuestaUsuario !== respuestaCorrecta) {
+        while (norm(respuestaUsuario) !== norm(respuestaCorrecta)) {
             respuestaUsuario = prompt("Incorrecto. Intenta nuevamente. Escribe el apellido del primer presidente de la democracia:");
         }
 
         alert("¡Correcto! Acceso permitido.");
         //Ejercicio 8
-        var nombreCorrecto = "Adolfo";
-        var apellidoCorrecto = "Suárez";
+        function norm(s){
+            return s.toLowerCase().trim().normalize("NFD");
+        }
+        var nombreCorrecto = "adolfo";
+        var apellidoCorrecto = "suarez";
         var respuesta;
 
         while (true) {
             respuesta = prompt("¿Cuál fue el primer presidente de la democracia española?");
             
-            if (respuesta === nombreCorrecto + " " + apellidoCorrecto) {
+            if (norm(respuesta) === norm(nombreCorrecto + apellidoCorrecto)) {
                 alert("¡Correcto!");
                 break;
-            } else if (respuesta === nombreCorrecto) {
+            } else if (norm(respuesta) === norm(nombreCorrecto)) {
                 alert("Te falta el apellido.");
-            } else if (respuesta === apellidoCorrecto) {
+            } else if (norm(respuesta) === norm(apellidoCorrecto)) {
                 alert("Te falta el nombre.");
             } else {
                 alert("ERROR. Inténtelo de nuevo.");
@@ -182,5 +190,4 @@
         }
     </script>
 </body>
-
 </html>
