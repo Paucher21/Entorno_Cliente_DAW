@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // Ejercicio 1
+        let entero = 1357;
+        let decimal = 135.7;
+        let cientifico = 135.7e-2;
+        let octal = 0o1357;
+        let hexadecimal = 0x1357;
+
+        alert("numero entero: " + entero);
+        alert("numero decimal: " + decimal);
+        alert("numero cientifico: " + cientifico);
+        alert("numero octal: " + octal);
+        alert("numero hexadecimal: " + hexadecimal);
+
+        //Ejercicio 2
+        var nombre = "Juan";
+        var apellido = "Pérez";
+        var edad = 25;
+        var añoNacimiento = 1998;
+
+        // Alert con comillas simples
+        alert('Este es un mensaje con "comillas simples"');
+        // Nombre y apellido con salto de línea
+        alert(nombre + "\n" + apellido);
+        // Suma de edad y año de nacimiento
+        alert("Suma edad + año nacimiento: " + (edad + añoNacimiento));
+        // Suma de todas las variables (concatenación)
+        alert("Suma de todas las variables: " + nombre + apellido + edad + añoNacimiento);
+
+        //Ejercicio 3
+        //Valores
+        var operacion1 = (10 == 10);
+        var operacion2 = (10 === 10);
+        var operacion3 = (10 === 10.0);
+        var operacion4 = ("Laura" == "laura");
+        var operacion5 = ("Laura" > "laura");
+        var operacion6 = ("Laura" < "laura");
+        var operacion7 = ("123" == 123);
+        var operacion8 = ("123" === 123);
+        var operacion9 = (parseInt("123") === 123);
+
+        alert("La operación 10 == 10 es: " + operacion1);
+        alert("La operación 10 === 10 es: " + operacion2);
+        alert("La operación 10 === 10.0 es: " + operacion3);
+        alert("La operación 'Laura' == 'laura' es: " + operacion4);
+        alert("La operación 'Laura' > 'laura' es: " + operacion5);
+        alert("La operación 'Laura' < 'laura' es: " + operacion6);
+        alert("La operación '123' == 123 es: " + operacion7);
+        alert("La operación '123' === 123 es: " + operacion8);
+        alert("La operación parseInt('123') === 123 es: " + operacion9);
+
+        //Ejercicio 4
+        // Solicitar edad del usuario
+        var edadUsuario = parseInt(prompt("Introduce tu edad:"));
+
+        // Validar y clasificar la edad
+        if (edadUsuario < 0) {
+            alert("Edad no válida. Debe ser un número positivo.");
+        } else if (edadUsuario <= 12) {
+            alert("Niño");
+        } else if (edadUsuario <= 26) {
+            alert("Joven");
+        } else if (edadUsuario <= 60) {
+            alert("Adulto");
+        } else {
+            alert("Jubilado");
+        }
+        // Ejercicio 5
+        // Programa para generar horas desde las 9:00 hasta las 21:30 con intervalos de 30 minutos
+        document.write("<h2>Horarios de 9:00 a 21:30 (intervalos de 30 minutos):</h2>");
+        
+        var esHoraPunto = true;
+        
+        for (var hora = 9; hora <= 21; hora++) {
+            if (esHoraPunto) {
+                document.write(hora + ":00<br>");
+                esHoraPunto = false;
+                hora--; 
+            } else {
+                document.write(hora + ":30<br>");
+                esHoraPunto = true;
+            }
+            
+            if (hora == 21 && !esHoraPunto) {
+                break;
+            }
+        }
+        //Ejercicio 6
+        document.write("<h2>Horario de 9:00 a 21:00 (intervalos de 5 minutos)</h2>");
+        
+        for (let hora = 9; hora <= 21; hora++) {
+            
+            for (let minuto = 0; minuto < 60; minuto += 5) {
+                
+                if (hora === 21 && minuto > 0) break;
+                
+                const horaStr = hora.toString().padStart(2, '0');
+                const minutoStr = minuto.toString().padStart(2, '0');
+                
+                document.write(`${horaStr}:${minutoStr}<br>`);
+            }
+        }
+        //Ejercicio 7
+        // Control parental - primer presidente: Adolfo Suárez
+        var respuestaCorrecta = "Suárez";
+        var respuestaUsuario = prompt("Escribe el apellido del primer presidente de la democracia:");
+
+        while (respuestaUsuario !== respuestaCorrecta) {
+            respuestaUsuario = prompt("Incorrecto. Intenta nuevamente. Escribe el apellido del primer presidente de la democracia:");
+        }
+
+        alert("¡Correcto! Acceso permitido.");
+        //Ejercicio 8
+        var nombreCorrecto = "Adolfo";
+        var apellidoCorrecto = "Suárez";
+        var respuesta;
+
+        while (true) {
+            respuesta = prompt("¿Cuál fue el primer presidente de la democracia española?");
+            
+            if (respuesta === nombreCorrecto + " " + apellidoCorrecto) {
+                alert("¡Correcto!");
+                break;
+            } else if (respuesta === nombreCorrecto) {
+                alert("Te falta el apellido.");
+            } else if (respuesta === apellidoCorrecto) {
+                alert("Te falta el nombre.");
+            } else {
+                alert("ERROR. Inténtelo de nuevo.");
+            }
+        }
+        //Ejercicio 9
+        var edadSwitch = parseInt(prompt("Introduce tu edad:"));
+
+        if (edadSwitch < 0) {
+            alert("Edad no válida");
+        } else {
+            
+            var grupo = Math.floor(edadSwitch / 10);
+            
+            switch (grupo) {
+                case 0:
+                case 1:
+                    if (edadSwitch <= 12) {
+                        alert("Niño");
+                    } else {
+                        alert("Joven");
+                    }
+                    break;
+                case 2:
+                    if (edadSwitch <= 26) {
+                        alert("Joven");
+                    } else {
+                        alert("Adulto");
+                    }
+                    break;
+                case 3:
+                    alert("Adulto");
+                    break;
+                case 4:
+                    alert("Adulto");
+                    break;
+                case 5:
+                    alert("Adulto");
+                    break;
+                case 6:
+                    alert("Adulto");
+                    break;
+                default:
+                    alert("Jubilado");
+            }
+        }
+    </script>
+</body>
+</html>
