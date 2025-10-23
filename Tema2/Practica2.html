@@ -58,19 +58,22 @@
 
         //Ejercicio 4
         // Solicitar edad del usuario
-        var edadUsuario = parseInt(prompt("Introduce tu edad:"));
+        var edadUsuario = parseInt("Introduce tu edad:");
 
-        // Validar y clasificar la edad
-        if (edadUsuario < 0) {
+        if(isNaN(edadUsuario)){
+            if (edadUsuario < 0) {
+                alert("Edad no válida. Debe ser un número positivo.");
+            } else if (edadUsuario <= 12) {
+                alert("Niño");
+            } else if (edadUsuario <= 26) {
+                alert("Joven");
+            } else if (edadUsuario <= 60) {
+                alert("Adulto");
+            } else {
+                alert("Jubilado");
+            }
+        }else{ 
             alert("Edad no válida. Debe ser un número positivo.");
-        } else if (edadUsuario <= 12) {
-            alert("Niño");
-        } else if (edadUsuario <= 26) {
-            alert("Joven");
-        } else if (edadUsuario <= 60) {
-            alert("Adulto");
-        } else {
-            alert("Jubilado");
         }
         // Ejercicio 5
         // Programa para generar horas desde las 9:00 hasta las 21:30 con intervalos de 30 minutos
@@ -179,4 +182,5 @@
         }
     </script>
 </body>
+
 </html>
