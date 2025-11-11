@@ -1,0 +1,160 @@
+//Tema 3
+
+//Metodos Date JS
+
+    //Date --> enero = 0
+    //Date --> febrero = 1
+    //Date --> marzo = 2 ...
+
+    //Propiedades
+        //--> constructor --> Devuelve la funcion Date
+        //prototype --> te permitira añadir metodos a la clase Date
+        //prototype.constructor --> Devuelve la funcion Date
+
+    //Metodos
+
+        //--> getDate --> Devuelve el dia del mes
+        //--> getDay --> Devuelve el dia de la semana
+        //--> getFullYear --> Devuelve el año completo
+        //--> getHours --> Devuelve la hora
+        //--> getMilliseconds --> Devuelve el milisegundos
+        //--> getMinutes --> Devuelve los minutos
+        //--> getMonth --> Devuelve el mes
+        //--> getSeconds --> Devuelve los segundos
+        //--> getTime --> Devuelve los milisegundos desde media noche del 1 de Enero 1970 00:00:00 UTC
+        //--> getTimezoneOffset --> Devuelve la diferencia entre la hora local y UTC en minutos
+        //--> getUTCDate --> Devuelve el dia del mes en formato UTC
+        //--> getUTCDay --> Devuelve el dia de la semana en formato UTC
+        //--> getUTCFullYear --> Devuelve el año completo en formato UTC
+
+        //--> setDate --> ajusta el dia del mes del objeto Date
+        //--> setFullYear --> ajusta el año completo del objeto Date
+        //--> setHours --> ajusta la hora del objeto Date
+        //--> setMilliseconds --> ajusta el milisegundos del objeto Date
+        //--> setMinutes --> ajusta los minutos del objeto Date
+        //--> setMonth --> ajusta el mes del objeto Date
+        //--> setSeconds --> ajusta los segundos del objeto Date
+        //--> setTime --> ajusta el milisegundos desde media noche del 1 de Enero 1970 00:00:00 UTC
+
+//Ejemplo
+    //getDate
+    var data = new Date();
+
+    console.log(data.getDate());
+
+    //getDay
+    var data = new Date();
+
+    console.log(data.getDay());
+
+    //getFullYear
+    var data = new Date();
+
+    console.log(data.getFullYear());
+
+    //getHours
+    var data = new Date();
+
+    console.log(data.getHours());
+
+    //getMilliseconds
+    var data = new Date();
+
+    console.log(data.getMilliseconds());
+
+    //getMinutes
+    var data = new Date();
+
+    console.log(data.getMinutes());
+
+    //getMonth
+    var data = new Date();
+
+    console.log(data.getMonth());
+
+    //getSeconds
+    var data = new Date();
+
+    console.log(data.getSeconds());
+
+    //getTime
+    var data = new Date();
+
+    console.log(data.getTime());
+
+    //getTimezoneOffset
+    var data = new Date();
+
+    console.log(data.getTimezoneOffset());
+
+    //getUTCDate
+    var data = new Date();
+
+    console.log(data.getUTCDate());
+
+    //getUTCDay
+    var data = new Date();
+
+    console.log(data.getUTCDay());
+
+    //getUTCFullYear
+    var data = new Date();
+
+    console.log(data.getUTCFullYear());
+
+    //setDate
+    var data = new Date();
+
+    data.setDate(1);
+
+    console.log(data.getDate());
+
+    //setFullYear
+    var data = new Date();
+
+    data.setFullYear(2000);
+
+    console.log(data.getFullYear());
+
+    //setHours
+    var data = new Date();
+
+    data.setHours(1);
+
+    console.log(data.getHours());
+
+    //setMilliseconds
+    var data = new Date();
+
+    data.setMilliseconds(1);
+
+    console.log(data.getMilliseconds());
+
+    //setMinutes
+    var data = new Date();
+
+    data.setMinutes(1);
+
+    console.log(data.getMinutes());
+
+    //setMonth
+    var data = new Date();
+
+    data.setMonth(1);
+
+    console.log(data.getMonth());
+
+    //setSeconds
+    var data = new Date();
+
+    data.setSeconds(1);
+
+    console.log(data.getSeconds());
+
+    //setTime
+    var data = new Date();
+
+    data.setTime(1);
+
+    console.log(data.getTime());
+
