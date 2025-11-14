@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validador de Contraseña - Asociación Deportiva Castro Urdiales</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .contenedor {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #bdc3c7;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+        
+        .resultado {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 4px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .segura {
+            background-color: #d4edda;
+            border-color: #28a745;
+        }
+        
+        .insegura {
+            background-color: #f8d7da;
+            border-color: #dc3545;
+        }
+        
+        .requisitos {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e8f4fc;
+            border-radius: 4px;
+        }
+        
+        .requisitos h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .requisito {
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .requisito.cumplido {
+            color: #28a745;
+        }
+        
+        .requisito.incumplido {
+            color: #dc3545;
+        }
+        
+        .icono {
+            margin-right: 8px;
+            font-weight: bold;
+        }
+        
+        .volver {
+            display: inline-block;
+            margin-top: 20px;
+            color: #3498db;
+            text-decoration: none;
+        }
+        
+        .volver:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="contenedor">
+        <h1>Validador de Contraseña</h1>
+        
+        <div class="form-group">
+            <label for="contrasena">Introduce tu contraseña:</label>
+            <input type="password" id="contrasena" placeholder="Escribe tu contraseña aquí">
+        </div>
+        
+        <button onclick="validarContrasena()">Validar Contraseña</button>
+        
+        <div id="resultado" class="resultado">
+            <p>Introduce una contraseña para validar su seguridad.</p>
+        </div>
+        
+        <div class="requisitos">
+            <h3>Requisitos para una contraseña segura:</h3>
+            <div id="lista-requisitos">
+                <div class="requisito" id="req-longitud">
+                    <span class="icono">❌</span> Tener entre 8 y 16 caracteres
+                </div>
+                <div class="requisito" id="req-mayuscula">
+                    <span class="icono">❌</span> Contener al menos una letra mayúscula
+                </div>
+                <div class="requisito" id="req-minuscula">
+                    <span class="icono">❌</span> Contener al menos una letra minúscula
+                </div>
+                <div class="requisito" id="req-numero">
+                    <span class="icono">❌</span> Contener al menos un número
+                </div>
+                <div class="requisito" id="req-especial">
+                    <span class="icono">❌</span> Contener al menos un carácter especial (_-@#$%&)
+                </div>
+            </div>
+        </div>
+        
+        <a href="index.html" class="volver">← Volver a la página principal</a>
+    </div>
+
+    <script src="js/t3e9_contrasena.js"></script>
+</body>
+</html>
