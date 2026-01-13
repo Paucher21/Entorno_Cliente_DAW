@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Utilidades</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .contenedor {
+            display: flex;
+            align-items: flex-start; 
+        }
+        .formulario,
+        .resultado {
+            margin: 10px; 
+            padding: 10px;
+            border: 1px solid #ccc; 
+            border-radius: 5px; 
+        }
+        .resultado {
+            min-width: 300px; 
+        }
+        #tablaMaÑana,
+        #tablaTarde {
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-bottom: 20px; 
+        }
+
+        #tablaMaÑana th,
+        #tablaMaÑana td,
+        #tablaTarde th,
+        #tablaTarde td {
+            border: 1px solid #ccc; 
+            padding: 8px; 
+            text-align: center; 
+        }
+
+        #tablaMaÑana th,
+        #tablaTarde th {
+            background-color: #f2f2f2; 
+        }
+
+        #tablaMaÑana tr:nth-child(even),
+        #tablaTarde tr:nth-child(even) {
+            background-color: #f9f9f9; 
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Asociación Deportiva Castro Urdiales</h1>
+        <nav>
+            <ul>
+                <li><a href="#imc">Calculadora IMC</a></li>
+                <li><a href="#fcm">Calculadora FCM</a></li>
+                <li><a href="#categoria">Calculadora de Categoría</a></li>
+                <li><a href="#horarios">Horario de la Asociación</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="imc">
+            <h2>Calculadora IMC</h2>
+            <div class="contenedor">
+                <div class="formulario">
+                    <form id="formIMC" onsubmit="calcularIMC(event)">
+                        <label for="peso">Peso (kg):</label>
+                        <input type="number" id="peso" required><br>
+                        <label for="altura">Altura (cm):</label>
+                        <input type="number" id="altura" required><br>
+                        <button type="submit">Calcular IMC</button>
+                    </form>
+                </div>
+                <div class="resultado">
+                    <div id="resultadoIMC"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="fcm">
+            <h2>Calculadora FCM</h2>
+            <div class="contenedor">
+                <div class="formulario">
+                    <form id="formFCM" onsubmit="calcularFCM(event)">
+                        <label for="edadFCM">Edad:</label>
+                        <input type="number" id="edadFCM" required><br>
+                        <label for="sexo">Sexo:</label>
+                        <select id="sexo" required>
+                            <option value="masculino">Masculino</option>
+                            <option value="femenino">Femenino</option>
+                        </select>
+                        <button type="submit">Calcular FCM</button>
+                    </form>
+                </div>
+                <div class="resultado">
+                    <div id="resultadoFCM"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="categoria">
+            <h2>Calculadora de Categoría</h2>
+            <div class="contenedor">
+                <div class="formulario">
+                    <form id="formCategoria" onsubmit="calcularCategoria(event)">
+                        <label for="anioNacimiento">Año de Nacimiento:</label>
+                        <input type="number" id="anioNacimiento" required><br>
+                        <button type="submit">Calcular Categoría</button>
+                    </form>
+                </div>
+                <div class="resultado">
+                    <div id="resultadoCategoria"></div>
+                </div>
+            </div>
+        </section>
+            <section id="horarios">
+                <h2>Horarios de la Asociación</h2>
+                <div class="contenedor">
+                    <div class="formulario">
+                        <button onclick="generarHorarios()">Generar Horarios</button>
+                    </div>
+                    <div class="resultado">
+                        <div id="horariosResultados">
+                            <h3>Horario de Mañana</h3>
+                            <table id="tablaMaÑana">
+                                <thead>
+                                    <tr>
+                                        <th>Hora</th>
+                                        <th>Lunes</th>
+                                        <th>Martes</th>
+                                        <th>Miércoles</th>
+                                        <th>Jueves</th>
+                                        <th>Viernes</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                </tbody>
+                            </table>
+
+                            <h3>Horario de Tarde</h3>
+                            <table id="tablaTarde">
+                                <thead>
+                                    <tr>
+                                        <th>Hora</th>
+                                        <th>Lunes</th>
+                                        <th>Martes</th>
+                                        <th>Miércoles</th>
+                                        <th>Jueves</th>
+                                        <th>Viernes</th>
+                                        <th>Sábado</th>
+                                        <th>Domingo</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+    </main>
+
+    <footer>
+        <p>2025 Asociación Deportiva Castro Urdiales</p>
+    </footer>
+
+    <script src="imc.js"></script>
+    <script src="fcm.js"></script>
+    <script src="categoria.js"></script>
+    <script src="horario.js"></script>
+</body>
+</html>

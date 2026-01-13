@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Producto Azul - Breaking Bad</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #1a1a2e;
+            color: #fff;
+        }
+        
+        .container {
+            background-color: #16213e;
+            padding: 30px;
+            border-radius: 10px;
+            border: 2px solid #0f3460;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #4cc9f0;
+            text-shadow: 0 0 10px rgba(76, 201, 240, 0.5);
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #f72585;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #72efdd;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .example {
+            font-size: 12px;
+            color: #a9a9a9;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            background-color: #0f3460;
+            border: 2px solid #4cc9f0;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: all 0.3s;
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #f72585;
+            box-shadow: 0 0 10px rgba(247, 37, 133, 0.5);
+        }
+        
+        .valid {
+            border-color: #4ade80 !important;
+            background-color: rgba(74, 222, 128, 0.1) !important;
+        }
+        
+        .invalid {
+            border-color: #f87171 !important;
+            background-color: rgba(248, 113, 113, 0.1) !important;
+        }
+        
+        button {
+            background: linear-gradient(45deg, #f72585, #4361ee);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(247, 37, 133, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: rgba(15, 52, 96, 0.7);
+            display: none;
+        }
+        
+        .result.success {
+            border-left: 5px solid #4ade80;
+            display: block;
+        }
+        
+        .result.error {
+            border-left: 5px solid #f87171;
+            display: block;
+        }
+        
+        .result h3 {
+            margin-top: 0;
+            color: #4cc9f0;
+        }
+        
+        .formatted-account {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #0f3460;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 18px;
+            color: #72efdd;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+        
+        .validation-info {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: rgba(15, 52, 96, 0.5);
+            border-radius: 5px;
+            border: 1px solid #4cc9f0;
+        }
+        
+        .validation-info h3 {
+            color: #f72585;
+            margin-top: 0;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .counter {
+            text-align: center;
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #0f3460;
+            border-radius: 5px;
+            border: 1px solid #f72585;
+        }
+        
+        .counter h3 {
+            color: #4cc9f0;
+            margin-top: 0;
+        }
+        
+        .counter-value {
+            font-size: 36px;
+            font-weight: bold;
+            color: #f72585;
+            margin: 10px 0;
+        }
+        
+        .reset-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ffa726);
+            width: auto;
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 CONTROL DE PRODUCTO AZUL 🧪</h1>
+        <div class="subtitle">Walter White & Jesse Pinkman - Alburquerque Distribution Network</div>
+        
+        <form id="productForm">
+            <div class="form-group">
+                <label for="fecha">Fecha de creación:</label>
+                <input type="text" id="fecha" name="fecha" placeholder="dd/mm/aaaa">
+                <div class="example">Ejemplo: 15/09/2008</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="cocinero">Cocinero (Código):</label>
+                <input type="text" id="cocinero" name="cocinero" placeholder="XX$####">
+                <div class="example">Formato: 2 letras mayúsculas, símbolo, 4 dígitos. Ej: WW$1234</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="destinatario">Destinatario:</label>
+                <input type="text" id="destinatario" name="destinatario" placeholder="Estado_ciudad:####">
+                <div class="example">Formato: 2-3 letras estado, _, ciudad, :, 4 dígitos. Ej: NM_alburquerque:1234</div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="gramos">Gramos:</label>
+                    <input type="text" id="gramos" name="gramos" placeholder="100-5000">
+                    <div class="example">Entre 100 y 5000 gramos</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="composicion">Composición:</label>
+                    <input type="text" id="composicion" name="composicion" placeholder="200gC3OH7">
+                    <div class="example">Cantidad en g + componentes. Ej: 200gC3OH7</div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="cuenta">Número de cuenta EEUU:</label>
+                <input type="text" id="cuenta" name="cuenta" placeholder="AB12-123456789012-1234">
+                <div class="example">Formato: LetraLetraNúmeroNúmero-12dígitos-4dígitos</div>
+            </div>
+            
+            <button type="submit">VALIDAR ENVÍO</button>
+        </form>
+        
+        <div class="result" id="result">
+            <h3 id="result-title">Resultado de Validación</h3>
+            <div id="result-message"></div>
+            <div class="formatted-account" id="formatted-account"></div>
+        </div>
+        
+        <div class="counter">
+            <h3>CONTADOR DE INTENTOS FALLIDOS</h3>
+            <div class="counter-value" id="counter-value">0</div>
+            <div>Intentos fallidos de validación</div>
+            <button class="reset-btn" id="reset-btn">Reiniciar Contador</button>
+        </div>
+        
+        <div class="validation-info">
+            <h3>📋 ESPECIFICACIONES DE VALIDACIÓN:</h3>
+            <p><strong>Fecha:</strong> Formato dd/mm/aaaa (días 01-31, meses 01-12)</p>
+            <p><strong>Cocinero:</strong> Ej: WW$1234, JP#5678, HH@9012</p>
+            <p><strong>Destinatario:</strong> Ej: TX_houston:4321, CA_losangeles:9876</p>
+            <p><strong>Gramos:</strong> 100-5000 (solo números)</p>
+            <p><strong>Composición:</strong> Cantidad + g + fórmula química. Ej: 500gCH3NH2</p>
+            <p><strong>Cuenta USA:</strong> Las letras se convierten a números (A=1, B=2...). La suma debe coincidir con los primeros 2 dígitos.</p>
+        </div>
+    </div>
+
+    <script src="cookies.js"></script>
+    <script>
+
+        function getLetterValue(letter) {
+            return letter.toUpperCase().charCodeAt(0) - 64;
+        }
+        
+        function validarFecha(fecha) {
+            const regex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d{2}$/;
+            if (!regex.test(fecha)) return false;
+            
+            const parts = fecha.split('/');
+            const day = parseInt(parts[0]);
+            const month = parseInt(parts[1]) - 1;
+            const year = parseInt(parts[2]);
+            
+            const date = new Date(year, month, day);
+            return date.getDate() === day && 
+                   date.getMonth() === month && 
+                   date.getFullYear() === year;
+        }
+        
+        function validarCocinero(cocinero) {
+            const regex = /^[A-Z]{2}[$#@&*][0-9]{4}$/;
+            return regex.test(cocinero);
+        }
+        
+        function validarDestinatario(destinatario) {
+            const regex = /^[A-Z]{2,3}_[a-z]+:[0-9]{4}$/;
+            return regex.test(destinatario);
+        }
+        
+        function validarGramos(gramos) {
+            if (!/^\d+$/.test(gramos)) return false;
+            const num = parseInt(gramos);
+            return num >= 100 && num <= 5000;
+        }
+
+        function validarComposicion(composicion) {
+            const regex = /^(\d+)g([A-Za-z]{1,2}\d*){2}$/;
+            return regex.test(composicion);
+        }
+
+        function validarCuenta(cuenta) {
+
+            const regex = /^([A-Z]{2})(\d{2})-(\d{12})-(\d{4})$/;
+            const match = cuenta.match(regex);
+            
+            if (!match) return false;
+            
+            const [, letra1, letra2, digitos12, digitos4] = match;
+            
+            const val1 = getLetterValue(letra1);
+            const val2 = getLetterValue(letra2);
+            const sumaLetras = val1 + val2;
+
+            const primerosDigitos = parseInt(digitos12.substring(0, 2));
+            if (sumaLetras !== primerosDigitos) return false;
+            
+            const primeros6 = digitos12.substring(0, 6).split('').map(Number);
+            const siguientes6 = digitos12.substring(6, 12).split('').map(Number);
+            
+            const sumaPrimeros6 = primeros6.reduce((a, b) => a + b, 0);
+            const sumaSiguientes6 = siguientes6.reduce((a, b) => a + b, 0);
+            
+            const control1 = Math.floor(sumaPrimeros6 / 6);
+            const control2 = Math.floor(sumaSiguientes6 / 6);
+            
+            const digitosControl = digitos4;
+            const controlCalculado = control1.toString().padStart(2, '0') + 
+                                     control2.toString().padStart(2, '0');
+            
+            return digitosControl === controlCalculado;
+        }
+
+        function formatearCuenta(cuenta) {
+            return cuenta.replace(/-/g, '');
+        }
+
+        function mostrarResultado(esValido, mensaje, cuentaFormateada = '') {
+            const resultDiv = document.getElementById('result');
+            const resultTitle = document.getElementById('result-title');
+            const resultMessage = document.getElementById('result-message');
+            const formattedAccount = document.getElementById('formatted-account');
+            
+            if (esValido) {
+                resultDiv.className = 'result success';
+                resultTitle.textContent = '✅ VALIDACIÓN EXITOSA';
+                resultTitle.style.color = '#4ade80';
+            } else {
+                resultDiv.className = 'result error';
+                resultTitle.textContent = '❌ ERROR DE VALIDACIÓN';
+                resultTitle.style.color = '#f87171';
+            }
+            
+            resultMessage.textContent = mensaje;
+            formattedAccount.textContent = cuentaFormateada;
+        }
+        
+        function actualizarContador(incrementar = false) {
+            let contador = getCookie('intentos_fallidos') || 0;
+            contador = parseInt(contador);
+            
+            if (incrementar) {
+                contador++;
+                setCookie('intentos_fallidos', contador, 30); // Cookie válida por 30 días
+            }
+            
+            document.getElementById('counter-value').textContent = contador;
+            return contador;
+        }
+
+        function reiniciarContador() {
+            deleteCookie('intentos_fallidos');
+            actualizarContador(false);
+        }
+        
+        function validarFormulario(event) {
+            event.preventDefault();
+
+            const fecha = document.getElementById('fecha').value.trim();
+            const cocinero = document.getElementById('cocinero').value.trim();
+            const destinatario = document.getElementById('destinatario').value.trim();
+            const gramos = document.getElementById('gramos').value.trim();
+            const composicion = document.getElementById('composicion').value.trim();
+            const cuenta = document.getElementById('cuenta').value.trim();
+            
+            let errores = [];
+
+            if (!validarFecha(fecha)) {
+                errores.push('Fecha inválida. Use formato dd/mm/aaaa');
+                document.getElementById('fecha').className = 'invalid';
+            } else {
+                document.getElementById('fecha').className = 'valid';
+            }
+            
+            if (!validarCocinero(cocinero)) {
+                errores.push('Código de cocinero inválido. Formato: 2 letras + símbolo + 4 dígitos');
+                document.getElementById('cocinero').className = 'invalid';
+            } else {
+                document.getElementById('cocinero').className = 'valid';
+            }
+            
+            if (!validarDestinatario(destinatario)) {
+                errores.push('Destinatario inválido. Formato: Estado_ciudad:####');
+                document.getElementById('destinatario').className = 'invalid';
+            } else {
+                document.getElementById('destinatario').className = 'valid';
+            }
+            
+            if (!validarGramos(gramos)) {
+                errores.push('Gramos inválidos. Debe ser número entre 100 y 5000');
+                document.getElementById('gramos').className = 'invalid';
+            } else {
+                document.getElementById('gramos').className = 'valid';
+            }
+            
+            if (!validarComposicion(composicion)) {
+                errores.push('Composición inválida. Ejemplo: 200gC3OH7');
+                document.getElementById('composicion').className = 'invalid';
+            } else {
+                document.getElementById('composicion').className = 'valid';
+            }
+            
+            if (!validarCuenta(cuenta)) {
+                errores.push('Número de cuenta USA inválido');
+                document.getElementById('cuenta').className = 'invalid';
+            } else {
+                document.getElementById('cuenta').className = 'valid';
+            }
+
+            if (errores.length === 0) {
+                const cuentaFormateada = formatearCuenta(cuenta);
+                mostrarResultado(true, 
+                    '✅ Todos los campos son válidos. Envío autorizado.\n' +
+                    `📦 Lote: ${composicion}\n` +
+                    `📍 Destino: ${destinatario}\n` +
+                    `👨‍🍳 Cocinero: ${cocinero}`,
+                    `💰 Cuenta formateada: ${cuentaFormateada}`
+                );
+            } else {
+                mostrarResultado(false, 
+                    '❌ Se encontraron errores:\n\n' + 
+                    errores.map(e => `• ${e}`).join('\n')
+                );
+
+                actualizarContador(true);
+            }
+        }
+
+        window.onload = function() {
+
+            document.getElementById('productForm').addEventListener('submit', validarFormulario);
+
+            document.getElementById('reset-btn').addEventListener('click', reiniciarContador);
+
+            actualizarContador(false);
+
+            const campos = ['fecha', 'cocinero', 'destinatario', 'gramos', 'composicion', 'cuenta'];
+            campos.forEach(id => {
+                document.getElementById(id).addEventListener('input', function() {
+                    this.classList.remove('valid', 'invalid');
+                });
+            });
+        };
+    </script>
+</body>
+</html>

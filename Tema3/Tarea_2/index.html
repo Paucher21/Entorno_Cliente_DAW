@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asociación Deportiva Castro Urdiales</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            display: grid;
+            grid-template-areas: 
+                "header header header"
+                "left main right"
+                "footer footer footer";
+            grid-template-columns: 1fr 3fr 1fr;
+            grid-template-rows: auto 1fr auto;
+            min-height: 100vh;
+        }
+        
+        header {
+            grid-area: header;
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            margin-left: 10px;
+            font-size: 1.8rem;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-right: 20px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        nav a:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+        
+
+        #mini-calendario {
+            width: 120px;
+            background: white;
+            color: #2c3e50;
+            border-radius: 5px;
+            text-align: center;
+            padding: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .dia-semana {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+        
+        .dia-numero {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+        
+        .mes {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+        
+        .left-sidebar, .right-sidebar {
+            background-color: #ecf0f1;
+            padding: 1rem;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+        
+        .left-sidebar {
+            grid-area: left;
+        }
+        
+        .right-sidebar {
+            grid-area: right;
+        }
+        
+        .sidebar-title {
+            margin-bottom: 1rem;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 0.5rem;
+        }
+        
+        .sidebar-menu {
+            list-style: none;
+        }
+        
+        .sidebar-menu li {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-menu a {
+            color: #2c3e50;
+            text-decoration: none;
+            display: block;
+            padding: 8px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        .sidebar-menu a:hover {
+            background-color: #d6dbdf;
+        }
+        
+       
+        main {
+            grid-area: main;
+            padding: 2rem;
+            background-color: white;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+        
+        .utilidad {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .utilidad h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #bdc3c7;
+            padding-bottom: 0.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #bdc3c7;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+        
+        .resultado {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: #e8f4fc;
+            border-radius: 4px;
+            border-left: 4px solid #3498db;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        
+        th, td {
+            border: 1px solid #bdc3c7;
+            padding: 0.5rem;
+            text-align: center;
+        }
+        
+        th {
+            background-color: #ecf0f1;
+            font-weight: bold;
+        }
+        
+        .destacado {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        
+     
+        footer {
+            grid-area: footer;
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 2rem;
+        }
+        
+        footer a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+        
+   
+        #popup-bienvenida {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            z-index: 1000;
+            width: 300px;
+            text-align: center;
+        }
+        
+        #popup-bienvenida h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        #popup-bienvenida button {
+            margin-top: 15px;
+            background-color: #e74c3c;
+        }
+        
+        #popup-bienvenida button:hover {
+            background-color: #c0392b;
+        }
+        
+       
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-areas: 
+                    "header"
+                    "main"
+                    "left"
+                    "right"
+                    "footer";
+                grid-template-columns: 1fr;
+            }
+            
+            .left-sidebar, .right-sidebar {
+                box-shadow: none;
+                border-top: 1px solid #bdc3c7;
+            }
+            
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            #mini-calendario {
+                margin-top: 10px;
+                align-self: flex-end;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <h1>Asociación Deportiva Castro Urdiales</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="utilidades.html">Utilidades</a></li>
+                    <li><a href="t3e9_contrasena.html">Validador de Contraseña</a></li>
+                    <li><a href="#">Actividades</a></li>
+                    <li><a href="#">Horarios</a></li>
+                    <li><a href="#">Contacto</a></li>
+                </ul>
+            </nav>
+            <div id="mini-calendario">
+                <!-- El calendario se generará con JavaScript -->
+            </div>
+        </header>
+        
+        <aside class="left-sidebar">
+            <h2 class="sidebar-title">Utilidades</h2>
+            <ul class="sidebar-menu">
+                <li><a href="utilidades.html#imc">Calculadora de IMC</a></li>
+                <li><a href="utilidades.html#fcm">Calculadora de FCM</a></li>
+                <li><a href="utilidades.html#categoria">Calculadora de Categoría</a></li>
+                <li><a href="utilidades.html#horario">Horario de la Asociación</a></li>
+                <li><a href="t3e9_contrasena.html">Validador de Contraseña</a></li>
+            </ul>
+        </aside>
+        
+        <main>
+            <h2>Bienvenido a la Asociación Deportiva Castro Urdiales</h2>
+            <p>Somos una asociación dedicada a promover el deporte y la actividad física en nuestra comunidad. Ofrecemos diversas actividades, horarios flexibles y herramientas para ayudarte a mantener un estilo de vida saludable.</p>
+            
+            <div class="utilidad">
+                <h3>Nuestras Instalaciones</h3>
+                <p>Contamos con modernas instalaciones deportivas que incluyen:</p>
+                <ul>
+                    <li>Piscina olímpica cubierta</li>
+                    <li>Pistas de tenis y pádel</li>
+                    <li>Gimnasio completamente equipado</li>
+                    <li>Campo de fútbol de césped artificial</li>
+                    <li>Sala de spinning y yoga</li>
+                </ul>
+            </div>
+            
+            <div class="utilidad">
+                <h3>Próximos Eventos</h3>
+                <p>No te pierdas nuestros próximos eventos deportivos:</p>
+                <ul>
+                    <li><strong>Maratón Ciudad de Castro:</strong> 15 de octubre</li>
+                    <li><strong>Torneo de baloncesto juvenil:</strong> 22 de octubre</li>
+                    <li><strong>Exhibición de gimnasia rítmica:</strong> 5 de noviembre</li>
+                    <li><strong>Carrera popular familiar:</strong> 12 de noviembre</li>
+                </ul>
+            </div>
+        </main>
+        
+        <aside class="right-sidebar">
+            <h2 class="sidebar-title">Noticias</h2>
+            <p><strong>Nuevos horarios de natación:</strong> A partir del próximo lunes, ampliamos el horario de piscina hasta las 22:00 h.</p>
+            <p><strong>Inscripciones abiertas:</strong> Ya puedes inscribirte en los cursos de natación para adultos.</p>
+            <p><strong>Promoción especial:</strong> 20% de descuento en la cuota familiar durante el mes de octubre.</p>
+        </aside>
+        
+        <footer>
+            <p>Asociación Deportiva Castro Urdiales &copy; 2023</p>
+            <p>Web desarrollada por: [Tu Nombre y Apellidos]</p>
+            <p><a href="#" id="aviso-legal">Aviso legal</a></p>
+        </footer>
+    </div>
+    
+    
+    <div id="overlay"></div>
+    <div id="popup-bienvenida">
+        <h2>¡Bienvenido!</h2>
+        <p>Gracias por visitar la web de la Asociación Deportiva Castro Urdiales. Esperamos que encuentres todo lo que necesitas para mantener un estilo de vida activo y saludable.</p>
+        <button id="cerrar-popup">Cerrar</button>
+    </div>
+
+    
+    <script src="js/calendario.js"></script>
+    <script src="js/aviso-legal.js"></script>
+    <script src="js/popup-bienvenida.js"></script>
+</body>
+</html>

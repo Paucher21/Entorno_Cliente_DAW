@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validación de Formulario de Discos</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .form-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #444;
+            transition: color 0.3s;
+        }
+        
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            box-sizing: border-box;
+        }
+        
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        
+        .checkbox-group input {
+            width: auto;
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+        
+        .checkbox-group label {
+            margin-bottom: 0;
+            font-weight: normal;
+        }
+        
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        button:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .error {
+            border-color: #f44336 !important;
+        }
+        
+        .error-label {
+            color: #f44336 !important;
+        }
+        
+        .error-message {
+            color: #f44336;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .success {
+            border-color: #4CAF50 !important;
+        }
+        
+        .success-label {
+            color: #4CAF50 !important;
+        }
+        
+        .required::after {
+            content: " *";
+            color: #f44336;
+        }
+        
+        .validation-result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 6px;
+            display: none;
+            font-weight: 600;
+        }
+        
+        .validation-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .validation-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .instructions {
+            background-color: #e8f4fd;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #0c5460;
+        }
+        
+        .instructions h3 {
+            margin-top: 0;
+            color: #0c5460;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>📀 Formulario de Discos - Validación</h1>
+        
+        <div class="instructions">
+            <h3>📋 Instrucciones de Validación:</h3>
+            <p><strong>Nombre del disco:</strong> Máximo 20 caracteres, obligatorio.</p>
+            <p><strong>Grupo/Cantante:</strong> Máximo 20 caracteres, obligatorio.</p>
+            <p><strong>Año de publicación:</strong> 4 caracteres numéricos (1900-2024).</p>
+            <p><strong>Localización:</strong> Número de estantería (opcional, pero si se llena debe ser numérico).</p>
+        </div>
+        
+        <form id="discoForm">
+            <div class="form-group">
+                <label for="nombre" class="required">Nombre del disco:</label>
+                <input type="text" id="nombre" name="nombre" maxlength="20" placeholder="Ej: The Dark Side of the Moon">
+                <div class="error-message" id="error-nombre"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="grupo" class="required">Grupo de música o cantante:</label>
+                <input type="text" id="grupo" name="grupo" maxlength="20" placeholder="Ej: Pink Floyd">
+                <div class="error-message" id="error-grupo"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="anio" class="required">Año de publicación:</label>
+                <input type="text" id="anio" name="anio" maxlength="4" placeholder="Ej: 1973">
+                <div class="error-message" id="error-anio"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="tipo">Tipo de música:</label>
+                <select id="tipo" name="tipo">
+                    <option value="rock">Rock</option>
+                    <option value="pop">Pop</option>
+                    <option value="punk">Punk</option>
+                    <option value="indie">Indie</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="localizacion">Localización (número de estantería):</label>
+                <input type="text" id="localizacion" name="localizacion" placeholder="Ej: 5 (opcional)">
+                <div class="error-message" id="error-localizacion"></div>
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="prestado" name="prestado" value="true">
+                <label for="prestado">¿Prestado?</label>
+            </div>
+
+            <button type="submit">Validar y Guardar Disco</button>
+        </form>
+        
+        <div class="validation-result" id="validation-result"></div>
+    </div>
+
+    <script>
+
+        class Disco {
+            constructor(nombre = "", grupo = "", año = "", tipo = "", localizacion = 0, prestado = false) {
+                this.nombre = nombre;
+                this.grupo = grupo;
+                this.año = año;
+                this.tipo = tipo;
+                this.localizacion = localizacion;
+                this.prestado = prestado;
+            }
+        }
+
+        let discos = [];
+
+        window.onload = function() {
+
+            const discosGuardados = localStorage.getItem('discos');
+            if (discosGuardados) {
+                discos = JSON.parse(discosGuardados);
+            }
+
+            document.getElementById('discoForm').addEventListener('submit', validarFormulario);
+
+            document.getElementById('nombre').addEventListener('blur', validarCampo20);
+            document.getElementById('grupo').addEventListener('blur', validarCampo20);
+            document.getElementById('anio').addEventListener('blur', validarAnio);
+            document.getElementById('localizacion').addEventListener('blur', validarLocalizacion);
+            
+            const campos = ['nombre', 'grupo', 'anio', 'localizacion'];
+            campos.forEach(campo => {
+                document.getElementById(campo).addEventListener('focus', function() {
+                    limpiarError(this.id);
+                });
+            });
+        };
+
+        function validarCampo20(event) {
+            const campo = event.target || event;
+            const id = campo.id;
+            const valor = campo.value.trim();
+            const errorElement = document.getElementById(`error-${id}`);
+            const label = document.querySelector(`label[for="${id}"]`);
+
+            campo.classList.remove('error', 'success');
+            if (label) label.classList.remove('error-label', 'success-label');
+            
+            if (valor.length === 0) {
+
+                campo.classList.add('error');
+                if (label) label.classList.add('error-label');
+                errorElement.textContent = 'Este campo es obligatorio';
+                errorElement.style.display = 'block';
+                return false;
+            } else if (valor.length > 20) {
+             
+                campo.classList.add('error');
+                if (label) label.classList.add('error-label');
+                errorElement.textContent = `Máximo 20 caracteres (tienes ${valor.length})`;
+                errorElement.style.display = 'block';
+                return false;
+            } else {
+               
+                campo.classList.add('success');
+                if (label) label.classList.add('success-label');
+                errorElement.style.display = 'none';
+                return true;
+            }
+        }
+
+        function validarAnio(event) {
+            const campo = event.target || event;
+            const valor = campo.value.trim();
+            const errorElement = document.getElementById('error-anio');
+            const label = document.querySelector('label[for="anio"]');
+            
+           
+            campo.classList.remove('error', 'success');
+            if (label) label.classList.remove('error-label', 'success-label');
+            
+            if (valor.length === 0) {
+               
+                campo.classList.add('error');
+                if (label) label.classList.add('error-label');
+                errorElement.textContent = 'Este campo es obligatorio';
+                errorElement.style.display = 'block';
+                return false;
+            } else if (!/^\d{4}$/.test(valor)) {
+                
+                campo.classList.add('error');
+                if (label) label.classList.add('error-label');
+                errorElement.textContent = 'Debe tener exactamente 4 dígitos numéricos';
+                errorElement.style.display = 'block';
+                return false;
+            } else {
+                const anioNum = parseInt(valor);
+                const anioActual = new Date().getFullYear();
+                if (anioNum < 1900 || anioNum > anioActual) {
+                    
+                    campo.classList.add('error');
+                    if (label) label.classList.add('error-label');
+                    errorElement.textContent = `El año debe estar entre 1900 y ${anioActual}`;
+                    errorElement.style.display = 'block';
+                    return false;
+                } else {
+                   
+                    campo.classList.add('success');
+                    if (label) label.classList.add('success-label');
+                    errorElement.style.display = 'none';
+                    return true;
+                }
+            }
+        }
+
+        function validarLocalizacion(event) {
+            const campo = event.target || event;
+            const valor = campo.value.trim();
+            const errorElement = document.getElementById('error-localizacion');
+            const label = document.querySelector('label[for="localizacion"]');
+            
+            campo.classList.remove('error', 'success');
+            if (label) label.classList.remove('error-label', 'success-label');
+                       
+            if (valor.length === 0) {
+                errorElement.style.display = 'none';
+                return true;
+            } else if (!/^\d+$/.test(valor)) {
+               
+                campo.classList.add('error');
+                if (label) label.classList.add('error-label');
+                errorElement.textContent = 'Debe ser un número entero positivo';
+                errorElement.style.display = 'block';
+                return false;
+            } else {
+                const num = parseInt(valor);
+                if (num < 0) {
+                    
+                    campo.classList.add('error');
+                    if (label) label.classList.add('error-label');
+                    errorElement.textContent = 'Debe ser un número positivo';
+                    errorElement.style.display = 'block';
+                    return false;
+                } else {
+                    
+                    campo.classList.add('success');
+                    if (label) label.classList.add('success-label');
+                    errorElement.style.display = 'none';
+                    return true;
+                }
+            }
+        }
+
+        function limpiarError(idCampo) {
+            const campo = document.getElementById(idCampo);
+            const errorElement = document.getElementById(`error-${idCampo}`);
+            const label = document.querySelector(`label[for="${idCampo}"]`);
+            
+            campo.classList.remove('error');
+            if (label) label.classList.remove('error-label');
+            errorElement.style.display = 'none';
+        }
+
+        function validarFormulario(event) {
+            event.preventDefault();
+            
+            const nombreValido = validarCampo20(document.getElementById('nombre'));
+            const grupoValido = validarCampo20(document.getElementById('grupo'));
+            const anioValido = validarAnio(document.getElementById('anio'));
+            const localizacionValida = validarLocalizacion(document.getElementById('localizacion'));
+            
+            const resultadoDiv = document.getElementById('validation-result');
+            
+            if (nombreValido && grupoValido && anioValido && localizacionValida) {
+
+                resultadoDiv.textContent = '✅ Formulario validado correctamente. Disco guardado.';
+                resultadoDiv.className = 'validation-result validation-success';
+                resultadoDiv.style.display = 'block';
+            
+                guardarDisco();
+
+                setTimeout(() => {
+                    document.getElementById('discoForm').reset();
+                    resultadoDiv.style.display = 'none';
+                    
+                    const campos = document.querySelectorAll('input, select');
+                    campos.forEach(campo => campo.classList.remove('success'));
+                    
+                    const labels = document.querySelectorAll('label');
+                    labels.forEach(label => label.classList.remove('success-label'));
+                }, 2000);
+            } else {
+
+                resultadoDiv.textContent = '❌ Por favor, corrige los errores en el formulario.';
+                resultadoDiv.className = 'validation-result validation-error';
+                resultadoDiv.style.display = 'block';
+            }
+        }
+
+        function guardarDisco() {
+            const nombre = document.getElementById('nombre').value.trim();
+            const grupo = document.getElementById('grupo').value.trim();
+            const anio = document.getElementById('anio').value.trim();
+            const tipo = document.getElementById('tipo').value;
+            const localizacion = document.getElementById('localizacion').value.trim();
+            const prestado = document.getElementById('prestado').checked;
+            
+            const nuevoDisco = new Disco(
+                nombre,
+                grupo,
+                anio,
+                tipo,
+                localizacion ? parseInt(localizacion) : 0,
+                prestado
+            );
+            
+            discos.push(nuevoDisco);
+
+            localStorage.setItem('discos', JSON.stringify(discos));
+            
+            console.log('Disco guardado:', nuevoDisco);
+            console.log('Total de discos:', discos.length);
+        }
+    </script>
+</body>
+</html>

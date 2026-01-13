@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios de JavaScript - Funciones, Arrays y Objetos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        h1, h2 {
+            color: #333;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin-top: 10px;
+            border-left: 4px solid #4CAF50;
+            white-space: pre-wrap;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ejercicios de JavaScript - Funciones, Arrays y Objetos</h1>
+
+    
+    <div class="container section">
+        <h2>EJERCICIO: t4e1_funciones</h2>
+        <p>Funciones creadas en el proyecto de la unidad 2:</p>
+        <button onclick="ejecutarIMC()">Calcular IMC</button>
+        <button onclick="ejecutarFCM()">Calcular FCM</button>
+        <button onclick="ejecutarCategoria()">Determinar Categoría</button>
+        <button onclick="ejecutarHorario()">Generar Horarios</button>
+        <div id="resultado-funciones" class="result"></div>
+    </div>
+
+ 
+    <div class="container section">
+        <h2>EJERCICIO: t4e2_arrays</h2>
+        <p>Gestión de lista de países:</p>
+        <button onclick="gestionarPaises()">Gestionar Países</button>
+        <div id="resultado-paises" class="result"></div>
+    </div>
+
+   
+    <div class="container section">
+        <h2>EJERCICIO: t4e4_objetos</h2>
+        <p>Gestión de discos de música:</p>
+        <button onclick="gestionarDiscos()">Gestionar Discos</button>
+        <div id="resultado-discos" class="result"></div>
+    </div>
+
+    
+    <script src="t4e1_funciones.js"></script>
+    <script src="t4e2_arrays.js"></script>
+    <script src="t4e4_objetos.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>

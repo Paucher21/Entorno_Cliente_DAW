@@ -1,0 +1,72 @@
+4.1 Funciones Predefinidas
+
+eval(cadena[objeto "opcional"])
+    eval(new String(cadena["2+2"]))
+    eval("2+2") --> 4
+
+
+parseInt(cadena, base) "base = 10 por defecto"
+    parseInt("100") --> 100
+    parseInt("Hello", 8) --> NaN
+    parseInt("17", 8) --> 15
+
+parseFloat(cadena)
+    parseFloat("100") --> 100
+    parseFloat("Hello") --> NaN
+    parseFloat("17.5") --> 17.5
+
+isNaN(cadena)
+    isNaN("100") --> false
+    isNaN("Hello") --> true
+    isNaN("17.5") --> false
+
+
+4.2 Arrays
+
+Indexación base-0
+    [] - Array vacío
+
+Metodos
+    length - Devuelve el número de elementos del array
+    sort() - Ordena el array
+    push(elemento) - Agrega un elemento al final del array
+    pop() - Elimina el último elemento del array
+    shift() - Elimina el primer elemento del array
+    unshift(elemento) - Agrega un elemento al principio del array
+    ej:
+        let a = [1, 2, 3, 4, 5];
+        console.log(a.length); // 5
+        a.push(6);
+        console.log(a); // [1, 2, 3, 4, 5, 6]
+        a.pop();
+        console.log(a); // [1, 2, 3, 4, 5]
+        a.unshift(0);
+        console.log(a); // [0, 1, 2, 3, 4, 5]
+        a.shift();
+        console.log(a); // [1, 2, 3, 4, 5]
+    
+Recorer los array
+    for loop 
+        ej:
+            let a = [1, 2, 3, 4, 5];
+            for (let i = 0; i < a.length; i++) {
+                console.log(a[i]);
+            }
+    for of loop
+        ej:
+            let a = [1, 2, 3, 4, 5];
+            for (let i of a) {
+                console.log(i);
+            }
+    forEach
+        ej:
+            let a = [1, 2, 3, 4, 5];
+            a.forEach(function(elemento) {
+                console.log(elemento);
+            });
+    for(let i of a)
+        ej:
+            let a = [1, 2, 3, 4, 5];
+            for(let i of a) {
+                console.log(i);
+            }

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Parejas - Los Simpson</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+        
+        h1 {
+            color: #FFD700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
+        }
+        
+        .game-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .score-board {
+            margin-bottom: 20px;
+            font-size: 18px;
+            background-color: #42A5F5;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        
+        .score-board label {
+            font-weight: bold;
+        }
+        
+        .score-board input {
+            width: 50px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            border: none;
+            background: transparent;
+            color: white;
+        }
+        
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 10px;
+            margin: 20px auto;
+            max-width: 600px;
+        }
+        
+        .card {
+            aspect-ratio: 1;
+            background-color: #4CAF50;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0;
+            transition: transform 0.3s, background-color 0.3s;
+            overflow: hidden;
+        }
+        
+        .card:hover {
+            transform: scale(1.05);
+        }
+        
+        .card.flipped {
+            background-color: white;
+        }
+        
+        .card.matched {
+            background-color: #FFD700;
+            cursor: default;
+        }
+        
+        .card img {
+            width: 80%;
+            height: 80%;
+            object-fit: contain;
+            display: none;
+        }
+        
+        .card.flipped img {
+            display: block;
+        }
+        
+        .card.matched img {
+            display: block;
+        }
+        
+        .controls {
+            margin-top: 20px;
+        }
+        
+        button {
+            background-color: #FF5722;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #E64A19;
+        }
+        
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .message {
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            min-height: 30px;
+        }
+        
+        .victory {
+            color: #4CAF50;
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .instructions {
+            background-color: #E3F2FD;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-align: left;
+        }
+        
+        .instructions h3 {
+            color: #1976D2;
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>🎮 Juego de Parejas - Los Simpson 🎮</h1>
+        
+        <div class="score-board">
+            <label>Parejas Encontradas: </label>
+            <input type="text" id="score" value="0" readonly>
+            <span>/ 6</span>
+        </div>
+        
+        <div class="game-board" id="gameBoard">
+            <!-- Las cartas se generarán con JavaScript -->
+        </div>
+        
+        <div class="controls">
+            <button id="startBtn">Nuevo Juego</button>
+            <button id="restartBtn">Reiniciar</button>
+        </div>
+        
+        <div class="message" id="message"></div>
+        
+        <div class="instructions">
+            <h3>📋 Instrucciones:</h3>
+            <p>1. Haz clic en una carta para voltearla y ver el personaje.</p>
+            <p>2. Haz clic en otra carta para encontrar su pareja.</p>
+            <p>3. Si las dos cartas son iguales, ¡encontraste una pareja!</p>
+            <p>4. Si son diferentes, se voltearán de nuevo después de un segundo.</p>
+            <p>5. Encuentra las 6 parejas para ganar el juego.</p>
+        </div>
+    </div>
+
+    <script>
+        // Personajes de Los Simpson (cada uno aparece 2 veces)
+        const characters = [
+            { name: 'Homer', image: 'homer.png' },
+            { name: 'Marge', image: 'marge.png' },
+            { name: 'Bart', image: 'bart.png' },
+            { name: 'Lisa', image: 'lisa.png' },
+            { name: 'Maggie', image: 'maggie.png' },
+            { name: 'Apu', image: 'apu.png' }
+        ];
+
+        // Variables del juego
+        let gameBoard = document.getElementById('gameBoard');
+        let scoreDisplay = document.getElementById('score');
+        let messageDisplay = document.getElementById('message');
+        let startBtn = document.getElementById('startBtn');
+        let restartBtn = document.getElementById('restartBtn');
+        
+        let cards = [];
+        let flippedCards = [];
+        let matchedPairs = 0;
+        let score = 0;
+        let gameStarted = false;
+        let canFlip = true;
+
+        // Inicializar el juego
+        function initGame() {
+            // Limpiar el tablero
+            gameBoard.innerHTML = '';
+            cards = [];
+            flippedCards = [];
+            matchedPairs = 0;
+            score = 0;
+            gameStarted = true;
+            canFlip = true;
+            messageDisplay.textContent = '¡Encuentra todas las parejas!';
+            messageDisplay.className = 'message';
+            scoreDisplay.value = '0';
+            
+            // Crear array de cartas (duplicamos cada personaje)
+            let cardArray = [];
+            characters.forEach(char => {
+                cardArray.push({...char});
+                cardArray.push({...char});
+            });
+            
+            // Mezclar las cartas
+            cardArray.sort(() => Math.random() - 0.5);
+            
+            // Crear las cartas en el DOM
+            cardArray.forEach((character, index) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.dataset.index = index;
+                card.dataset.character = character.name;
+                
+                // Crear imagen (en realidad usaremos texto por simplicidad)
+                const img = document.createElement('div');
+                img.textContent = character.name;
+                img.style.fontSize = '24px';
+                img.style.fontWeight = 'bold';
+                img.style.color = '#333';
+                img.style.display = 'none';
+                
+                card.appendChild(img);
+                cards.push({
+                    element: card,
+                    character: character.name,
+                    imageElement: img,
+                    flipped: false,
+                    matched: false
+                });
+                
+                gameBoard.appendChild(card);
+                
+                // Agregar evento de clic
+                card.addEventListener('click', () => flipCard(index));
+            });
+        }
+
+        // Voltear una carta
+        function flipCard(index) {
+            if (!gameStarted || !canFlip) return;
+            
+            const card = cards[index];
+            
+            // No hacer nada si la carta ya está volteada o emparejada
+            if (card.flipped || card.matched) return;
+            
+            // Voltear la carta
+            card.flipped = true;
+            card.element.classList.add('flipped');
+            card.imageElement.style.display = 'block';
+            
+            // Agregar a las cartas volteadas
+            flippedCards.push(card);
+            
+            // Si hay dos cartas volteadas, verificar si son pareja
+            if (flippedCards.length === 2) {
+                canFlip = false;
+                checkForMatch();
+            }
+        }
+
+        // Verificar si las cartas volteadas son pareja
+        function checkForMatch() {
+            const [card1, card2] = flippedCards;
+            
+            if (card1.character === card2.character) {
+                // ¡Es una pareja!
+                card1.matched = true;
+                card2.matched = true;
+                card1.element.classList.add('matched');
+                card2.element.classList.add('matched');
+                
+                matchedPairs++;
+                score++;
+                scoreDisplay.value = score;
+                
+                // Verificar si el juego ha terminado
+                if (matchedPairs === characters.length) {
+                    setTimeout(() => {
+                        messageDisplay.textContent = '🎉 ¡Felicidades! ¡Has ganado! 🎉';
+                        messageDisplay.classList.add('victory');
+                    }, 500);
+                } else {
+                    messageDisplay.textContent = '¡Bien! Encontraste una pareja.';
+                }
+                
+                flippedCards = [];
+                canFlip = true;
+            } else {
+                // No son pareja, voltearlas de nuevo después de un momento
+                messageDisplay.textContent = '¡Oh no! No son pareja. Intenta de nuevo.';
+                
+                setTimeout(() => {
+                    card1.flipped = false;
+                    card2.flipped = false;
+                    card1.element.classList.remove('flipped');
+                    card2.element.classList.remove('flipped');
+                    card1.imageElement.style.display = 'none';
+                    card2.imageElement.style.display = 'none';
+                    
+                    flippedCards = [];
+                    canFlip = true;
+                }, 1000);
+            }
+        }
+
+        // Event Listeners
+        startBtn.addEventListener('click', initGame);
+        restartBtn.addEventListener('click', initGame);
+
+        // Inicializar el juego al cargar la página
+        window.addEventListener('DOMContentLoaded', () => {
+            messageDisplay.textContent = 'Presiona "Nuevo Juego" para comenzar';
+            initGame();
+        });
+    </script>
+</body>
+</html>
