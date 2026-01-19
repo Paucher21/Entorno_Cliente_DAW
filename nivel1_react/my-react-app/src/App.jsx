@@ -1,72 +1,75 @@
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-function ParentComponent() {
-  const [name, setName] = useState("Juanaco");
-  const [count, setCount] = useState(0);
+export default function App() {
+  const [user, setUser] = useState(null);
+  const [newEmails, setNewEmails] = useState(0);
+
+  const button = user
+    ? <button onClick={() => setUser(null)}>Logout</button>
+    : <button onClick={() => setUser({ name: 'Antoñico' })}>Login</button>;
   
-  function handleGreet() {
-    alert(`Hola desde el padre, ${name}!`);
-  }
-
   return (
-    <div style={{ padding: '20px', border: '2px solid blue' }}>
-      <h2>Componente Padre</h2>
-      <p>Estado en padre: {name}</p>
-      <button onClick={() => setName("Juanky")}>
-        Cambiar nombre desde padre
-      </button>
-      
-      <ChildComponent 
-        name={name}
-        setName={setName}
-        count={count}
-        setCount={setCount}
-        onGreet={handleGreet}
-        info={{
-          age: 24,
-          hobbies: ["LOL", "Cerveza"],
-          occupation: "Estudiante de DAW2"
-        }}
-      />
-    </div>
-  );
-}
+    <div style={{ padding: '20px', maxWidth: '600px', margin: '0 auto' }}>
+      <h1>Nivel 5: Miniretillo</h1>
 
-function ChildComponent(props) {
-  return (
-    <div style={{ padding: '20px', marginTop: '20px', border: '2px solid green' }}>
-      <h3>Componente Hijo</h3>
-      <p>Nombre recibido: {props.name}</p>
-      <p>Edad: {props.info.age}</p>
-      <p>Ocupación: {props.info.occupation}</p>
-      <p>Contador: {props.count}</p>
+      {button}
+
+      {user ? (
+        <p style={{ color: 'green', fontSize: '18px' }}>
+          Bienvenido, <strong>{user.name}</strong>.
+        </p>
+      ) : (
+        <p style={{ color: 'gray', fontSize: '16px' }}>
+          Inicia sesión para continuar.
+        </p>
+      )}
       
-      <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
-        <button onClick={() => props.setName("Pablo")}>
-          Cambiar nombre a Pablo
+      <hr style={{ margin: '20px 0' }} />
+      
+      <h2>Gestión de correos</h2>
+
+      <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
+        <button 
+          onClick={() => setNewEmails((n) => n + 1)}
+          style={{ padding: '10px 15px', backgroundColor: '#4CAF50', color: 'white', border: 'none', borderRadius: '4px' }}
+        >
+          +1 email
         </button>
-        <button onClick={() => props.setName("Pedro")}>
-          Cambiar nombre a Pedro
+        <button 
+          onClick={() => setNewEmails(0)}
+          style={{ padding: '10px 15px', backgroundColor: '#f44336', color: 'white', border: 'none', borderRadius: '4px' }}
+        >
+          Reset emails
         </button>
-        <button onClick={() => props.setCount(props.count + 1)}>
-          Incrementar contador
-        </button>
-        <button onClick={props.onGreet}>
-          Saludar
-        </button>
+      </div>
+      
+      {newEmails > 0 && (
+        <div style={{
+          backgroundColor: '#e3f2fd',
+          borderLeft: '5px solid #2196F3',
+          padding: '15px',
+          margin: '10px 0',
+          borderRadius: '4px'
+        }}>
+          <h2 style={{ margin: '0 0 10px 0' }}>
+            📬 Tienes {newEmails} {newEmails === 1 ? 'correo nuevo' : 'correos nuevos'}
+          </h2>
+          <p style={{ margin: 0 }}>
+            {newEmails > 5 
+              ? '¡Tu bandeja de entrada está explotando!' 
+              : 'Revisa tu bandeja de entrada cuando puedas.'}
+          </p>
+        </div>
+      )}
+    
+      <div style={{ marginTop: '20px', padding: '10px', backgroundColor: '#f5f5f5', borderRadius: '4px' }}>
+        <p><strong>Estado actual:</strong></p>
+        <ul>
+          <li>Usuario: {user ? `Logueado como ${user.name}` : 'No logueado'}</li>
+          <li>Correos nuevos: {newEmails}</li>
+        </ul>
       </div>
     </div>
   );
 }
-
-function App() {
-  return (
-    <div className="App" style={{ padding: '40px' }}>
-      <h1>React DevTools - Demo</h1>
-      <ParentComponent />
-    </div>
-  );
-}
-
-export default App;
